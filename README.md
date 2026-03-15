@@ -14,10 +14,10 @@
 
 ```bash
 # 方式1：使用 HTTPS
-git clone --recurse-submodules https://github.com/ai-agent-ysj/agent-skills.git ~/.agent-skills
+git clone --recurse-submodules https://github.com/mac-home-config-ysj/.agent-skills.git ~/.agent-skills
 
 # 方式2：使用 SSH（推荐，已配置 SSH key 的用户）
-git clone --recurse-submodules git@github.com:ai-agent-ysj/agent-skills.git ~/.agent-skills
+git clone --recurse-submodules git@github.com:mac-home-config-ysj/.agent-skills.git ~/.agent-skills
 ```
 
 ### 第二步：安装管理命令
