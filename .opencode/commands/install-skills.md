@@ -1,5 +1,5 @@
 ---
-description: 安装 skills（支持项目级或全局，来源支持 SkillHub、Git repo、本地 local-skills）
+description: 安装 skills（支持项目级或全局，来源支持 SkillHub、Git repo、本地 personal-skills）
 ---
 
 # 安装 Skills
@@ -9,7 +9,7 @@ description: 安装 skills（支持项目级或全局，来源支持 SkillHub、
 | 来源 | 说明 | 文件位置 |
 |------|------|---------|
 | SkillHub | 从腾讯 SkillHub 在线下载 | 下载到 `skill-hub/<slug>/`，再软链接 |
-| local-skills | 用户手动放入 `local-skills/` 的自建 skills | 直接从 `local-skills/<name>/` 软链接 |
+| personal-skills | 用户手动放入 `personal-skills/` 的自建 skills | 直接从 `personal-skills/<name>/` 软链接 |
 | git-repo-skills | `git-repo-skills/` 下的 Git 仓库（支持 clone 新增） | 直接从 `git-repo-skills/<repo>/` 软链接 |
 
 **路径约定**（贯穿全流程）：
@@ -45,7 +45,7 @@ description: 安装 skills（支持项目级或全局，来源支持 SkillHub、
 ```
 - 选项1（默认）：SkillHub（在线下载，国内高速，收录 1.3 万个 AI Skills）
 - 选项2：git-repo-skills（Git 仓库，支持输入 clone 地址新增）
-- 选项3：local-skills（本地自建，手动放入 local-skills/ 目录）
+- 选项3：personal-skills（本地自建，手动放入 personal-skills/ 目录）
 
 ---
 
@@ -86,6 +86,7 @@ skill-hub/ 中已有以下 skills（标注了安装状态）：
 ```
 - 选项1（默认）：直接安装（使用本地已有版本）
 - 选项2：更新后安装（重新从 SkillHub 下载最新版覆盖，再安装）
+- 选项3：下载新技能（从 SkillHub 下载本地没有的技能，下载后安装）
 
 **如果本地没有任何 SkillHub skills**（EMPTY），跳过此询问，直接执行 A3（下载+安装）。
 
@@ -115,7 +116,7 @@ curl -fsSL https://skillhub-1388575217.cos.ap-guangzhou.myqcloud.com/install/ins
 
 **如果是"更新后安装"**：用 question 工具让用户从 A1 展示的本地列表中选择要更新的 skills（输入编号，多个空格分隔，all=全选，exit=取消）。记录选中的 slug 列表，直接进入 A5（不再询问意图）。
 
-**如果是首次下载（本地为空）**：用 question 工具询问用户意图：
+**如果是"下载新技能"或首次下载（本地为空）**：用 question 工具询问用户意图：
 - 选项1（默认）：浏览精选榜单（默认展示前 10 条）
 - 选项2：直接输入技能名称标识（如 `brave-search`、`github`）
 - 选项3：搜索关键词
@@ -203,12 +204,12 @@ ln -s "$HOME/.agent-skills/skill-hub/$SKILL_SLUG" "$LINK_PATH"
 
 ---
 
-## 分支 B：从 local-skills 安装
+## 分支 B：从 personal-skills 安装
 
-### B1. 扫描 local-skills/
+### B1. 扫描 personal-skills/
 
 ```bash
-LOCAL_SKILLS_DIR="$HOME/.agent-skills/local-skills"
+LOCAL_SKILLS_DIR="$HOME/.agent-skills/personal-skills"
 if [ -d "$LOCAL_SKILLS_DIR" ]; then
     find "$LOCAL_SKILLS_DIR" -maxdepth 2 -name "SKILL.md" | while read f; do
         skill_dir=$(dirname "$f")
@@ -219,14 +220,14 @@ else
 fi
 ```
 
-如果 `local-skills/` 不存在或为空，告知用户：将 skill 目录（含 `SKILL.md`）手动放入 `~/.agent-skills/local-skills/` 后重试，终止流程。
+如果 `personal-skills/` 不存在或为空，告知用户：将 skill 目录（含 `SKILL.md`）手动放入 `~/.agent-skills/personal-skills/` 后重试，终止流程。
 
 ### B2. 展示并选择
 
 检查 `$SKILLS_DIR` 已安装情况，用 question 工具展示：
 
 ```
-local-skills/ 中可用的 skills（输入编号，多个用空格分隔，all=全选，exit=取消）：
+personal-skills/ 中可用的 skills（输入编号，多个用空格分隔，all=全选，exit=取消）：
 
   [1] github [已安装]
   [2] nano-pdf
