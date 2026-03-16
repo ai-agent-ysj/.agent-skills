@@ -47,10 +47,10 @@ git clone --recurse-submodules git@github.com:mac-home-config-ysj/.agent-skills.
 mkdir -p ~/.config/opencode/commands
 
 # 创建软链接
-ln -s ~/.agent-skills/.opencode/commands/download-skills.md ~/.config/opencode/commands/
-ln -s ~/.agent-skills/.opencode/commands/install-skills.md ~/.config/opencode/commands/
-ln -s ~/.agent-skills/.opencode/commands/uninstall-skills.md ~/.config/opencode/commands/
-ln -s ~/.agent-skills/.opencode/commands/update-skills.md ~/.config/opencode/commands/
+ln -s ~/.agent-skills/commands/download-skills.md ~/.config/opencode/commands/
+ln -s ~/.agent-skills/commands/install-skills.md ~/.config/opencode/commands/
+ln -s ~/.agent-skills/commands/uninstall-skills.md ~/.config/opencode/commands/
+ln -s ~/.agent-skills/commands/update-skills.md ~/.config/opencode/commands/
 ```
 
 ### 第三步：验证
@@ -124,17 +124,16 @@ git push
 
 ```
 ~/.agent-skills/                    # 本仓库位置
-├── .opencode/
-│   └── commands/                   # 管理命令（软链接到 ~/.config/opencode/commands/）
-│       ├── download-skills.md
-│       ├── install-skills.md
-│       ├── uninstall-skills.md
-│       └── update-skills.md
+├── commands/                       # 管理命令（软链接到 ~/.config/opencode/commands/）
+│   ├── download-skills.md
+│   ├── install-skills.md
+│   ├── uninstall-skills.md
+│   └── update-skills.md
 │
 ├── skill-hub/                      # SkillHub 下载的 skills（由 /install-skills 自动管理）
 │   └── <slug>/
 │
-├── personal-skills/                   # 本地自建 skills
+├── personal-skills/                # 个人自建 skills
 │   ├── github/
 │   ├── nano-pdf/
 │   └── skill-vetter/
