@@ -7,6 +7,7 @@
 ## 这是什么？
 
 这是一个技能仓库管理器：
+
 - **存放位置**：`~/.agent-skills/` - 集中存放所有 skills（SkillHub 下载、本地自建、Git 仓库）
 - **管理命令**：安装几个快捷命令到 OpenCode，方便你通过 `/download-skills`、`/install-skills` 管理 skills
 
@@ -14,17 +15,17 @@
 
 在开始之前，请确保已安装以下工具：
 
-| 工具 | 说明 | 安装方式 |
-|------|------|----------|
-| [OpenCode](https://opencode.ai) | AI 编程助手（本仓库的宿主） | 参见官网文档 |
-| [git](https://git-scm.com) | 版本控制，用于克隆仓库和管理子模块 | `brew install git`（macOS） |
+| 工具                                           | 说明                           | 安装方式                      |
+| -------------------------------------------- | ---------------------------- | ------------------------- |
+| [OpenCode](https://opencode.ai)              | AI 编程助手（本仓库的宿主）              | 参见官网文档                    |
+| [git](https://git-scm.com)                   | 版本控制，用于克隆仓库和管理子模块            | `brew install git`（macOS） |
 | [skillhub CLI](https://skillhub.tencent.com) | SkillHub 官方命令行工具，用于搜索和下载在线技能 | `npm install -g skillhub` |
 
 > **注意**：skillhub CLI 仅在使用 SkillHub 在线来源时才需要。如果你只使用本地或 Git 仓库来源，可以跳过安装。
 
 ## 快速设置
 
-### 第一步：克隆仓库到 ~/.agent-skills/
+### 第一步：克隆仓库到 \~/.agent-skills/
 
 方式1：使用 HTTPS
 
@@ -56,6 +57,7 @@ ln -s ~/.agent-skills/commands/update-skills.md ~/.config/opencode/commands/
 ### 第三步：验证
 
 启动 OpenCode，输入 `/` 查看可用命令，你应该看到：
+
 - `/download-skills` - 只下载 skills 到 `~/.agent-skills/`，**不创建软链接**（支持 SkillHub 在线下载和 Git clone）
 - `/install-skills` - 安装 skills 并创建软链接（先选安装目标：当前项目 or 全局；再选来源：SkillHub、personal-skills、git-repo-skills）
 - `/uninstall-skills` - 卸载已安装的 skills（移除软链接）
@@ -78,6 +80,7 @@ ln -s ~/.agent-skills/commands/update-skills.md ~/.config/opencode/commands/
 ```
 
 两个命令说明：
+
 - `/download-skills`：支持 SkillHub 在线下载和 Git 仓库 clone，只下载源文件不安装
 - `/install-skills`：先询问安装目标（当前项目 or 全局），再支持三种来源（SkillHub、git-repo-skills、personal-skills），安装时会先执行下载流程再创建软链接
 
@@ -172,18 +175,19 @@ git -C ~/.agent-skills pull && git -C ~/.agent-skills submodule update --init --
 3. **`~/.config/opencode/commands/`**：存放全局可用的管理命令软链接
 
 当你运行 `/download-skills` 时：
+
 - SkillHub 来源：下载源文件到 `~/.agent-skills/skill-hub/<slug>/`，不创建软链接
 - Git 仓库来源：clone 到 `~/.agent-skills/git-repo-skills/<repo>/`，不创建软链接
 
 当你运行 `/install-skills` 时：
+
 - SkillHub 来源：先执行下载（同 `/download-skills`），再在目标目录创建软链接
 - personal-skills / git-repo-skills 来源：（如需 clone 则先执行），再创建指向源目录的软链接
 
 ## 常见问题
 
-**Q: 为什么要把仓库放在 ~/.agent-skills/？**
+**Q: 为什么要把仓库放在 \~/.agent-skills/？**
 A: 这是约定的位置，方便管理命令用绝对路径找到所有 skills。
 
 **Q: SkillHub、git-repo-skills、personal-skills 有什么区别？**
 A: SkillHub 是从 [skillhub.tencent.com](https://skillhub.tencent.com) 在线下载的第三方 skills；git-repo-skills 是通过 git submodule 跟踪的外部仓库，可以统一执行 `git submodule update --remote` 更新；personal-skills 是你自己创建和维护的技能。
-
