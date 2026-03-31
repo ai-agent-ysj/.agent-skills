@@ -30,13 +30,13 @@
 方式1：使用 HTTPS
 
 ```bash
-git clone --recurse-submodules https://github.com/ai-agent-ysj/.agent-skills.git ~/.agent-skills
+git clone --recurse-submodules https://github.com/ysjai/.agent-skills.git ~/.agent-skills
 ```
 
 方式2：使用 SSH（推荐，已配置 SSH key 的用户）
 
 ```bash
-git clone --recurse-submodules git@github.com:ai-agent-ysj/.agent-skills.git ~/.agent-skills
+git clone --recurse-submodules git@github.com:ysjai/.agent-skills.git ~/.agent-skills
 ```
 
 ### 第二步：安装管理命令
