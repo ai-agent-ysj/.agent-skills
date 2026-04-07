@@ -1,5 +1,5 @@
 ---
-description: 更新本地已有的 skills（支持 SkillHub skill-hub 和 git-repo-skills 子模块）
+description: 更新本地已有的 skills（支持 SkillHub 和 git-repo-skills 两种来源）
 ---
 
 # 更新 Skills
@@ -47,7 +47,7 @@ else
 fi
 ```
 
-如果 `skill-hub/` 为空（EMPTY），告知用户本地没有已下载的 SkillHub skills，可先运行 `/install-skills` 下载，终止本分支。
+如果 `skill-hub/` 为空（EMPTY），告知用户本地没有已下载的 SkillHub skills，可先运行 install-skills 命令下载（OpenCode: `/install-skills`；Claude Code: `/user:install-skills`），终止本分支。
 
 ### A2. 选择要更新的 skills
 
@@ -109,7 +109,7 @@ rm -rf "$TMP_DIR"
 
 ### A5. 汇报
 
-列出成功更新、失败的 skills，告知用户源文件已在 `~/.agent-skills/skill-hub/`，已安装的软链接自动生效（无需重新安装），提醒**重启 OpenCode** 生效。
+列出成功更新、失败的 skills，告知用户源文件已在 `~/.agent-skills/skill-hub/`，已安装的软链接自动生效（无需重新安装），提醒**重启当前平台（OpenCode / Claude Code）**生效。
 
 ---
 
@@ -142,7 +142,7 @@ else
 fi
 ```
 
-如果 `git-repo-skills/` 为空（EMPTY），告知用户本地没有已克隆的 Git 仓库，可先运行 `/install-skills` 添加，终止本分支。
+如果 `git-repo-skills/` 为空（EMPTY），告知用户本地没有已克隆的 Git 仓库，可先运行 install-skills 命令添加（OpenCode: `/install-skills`；Claude Code: `/user:install-skills`），终止本分支。
 
 ### B4. 检测未注册为子模块的仓库
 
@@ -174,8 +174,14 @@ git -C "$HOME/.agent-skills/$REPO_PATH" remote get-url origin 2>/dev/null || ech
 
 ```bash
 REMOTE_URL=$(git -C "$HOME/.agent-skills/$REPO_PATH" remote get-url origin)
-rm -rf "$HOME/.agent-skills/$REPO_PATH"
-git -C "$HOME/.agent-skills" submodule add "$REMOTE_URL" "$REPO_PATH"
+mv "$HOME/.agent-skills/$REPO_PATH" "$HOME/.agent-skills/$REPO_PATH.bak"
+git -C "$HOME/.agent-skills" submodule add "$REMOTE_URL" "$REPO_PATH" || {
+    # 网络失败时恢复备份
+    rm -rf "$HOME/.agent-skills/$REPO_PATH"
+    mv "$HOME/.agent-skills/$REPO_PATH.bak" "$HOME/.agent-skills/$REPO_PATH"
+    echo "FAILED: submodule add failed, restored backup"
+}
+rm -rf "$HOME/.agent-skills/$REPO_PATH.bak" 2>/dev/null
 ```
 
 ### B5. 更新所有子模块
@@ -198,12 +204,12 @@ git -C "$HOME/.agent-skills" status --short
 ```bash
 git -C "$HOME/.agent-skills" add .gitmodules
 git -C "$HOME/.agent-skills" add git-repo-skills/
-git -C "$HOME/.agent-skills" commit -m "更新 git-repo-skills 子模块到最新版本"
+git -C "$HOME/.agent-skills" commit -m "Update git-repo-skills submodules to latest version"
 ```
 
 ### B7. 汇报
 
-列出各仓库的更新情况（旧 commit → 新 commit，如有变化），提醒**重启 OpenCode** 生效。不执行 `git push`，除非用户明确要求。
+列出各仓库的更新情况（旧 commit → 新 commit，如有变化），提醒**重启当前平台（OpenCode / Claude Code）**生效。不执行 `git push`，除非用户明确要求。
 
 ---
 

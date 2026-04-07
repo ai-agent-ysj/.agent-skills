@@ -5,7 +5,7 @@ description: 下载 skills 到 ~/.agent-skills/（支持 SkillHub 下载、Git r
 # 下载 Skills
 
 你的任务是帮用户把 skills 下载/克隆到 `~/.agent-skills/` 中央仓库，**不创建任何软链接**。  
-下载完成后，可通过 `/install-skills` 安装到具体位置。
+下载完成后，可通过 install-skills 命令安装到具体位置（OpenCode: `/install-skills`；Claude Code: `/user:install-skills`）。
 
 **路径约定**：
 - `SKILL_HUB_DIR="$HOME/.agent-skills/skill-hub"` — SkillHub 下载目标
@@ -168,7 +168,7 @@ rm -rf "$TMP_DIR"
 
 列出成功下载/更新、跳过、失败的 skills，告知用户文件已存放在 `~/.agent-skills/skill-hub/`。
 
-> 下一步：运行 `/install-skills` 将这些 skills 安装到具体位置。
+> 下一步：运行 install-skills 命令将这些 skills 安装到具体位置（OpenCode: `/install-skills`；Claude Code: `/user:install-skills`）。
 
 ---
 
@@ -208,7 +208,7 @@ git -C "$GIT_REPO_DIR/$REPO_NAME" pull 2>&1
 
 告知用户仓库已克隆/更新到 `~/.agent-skills/git-repo-skills/<repo-name>/`。
 
-> 下一步：运行 `/install-skills` 从该仓库选择 skills 安装。
+> 下一步：运行 install-skills 命令从该仓库选择 skills 安装（OpenCode: `/install-skills`；Claude Code: `/user:install-skills`）。
 
 > 提示：若需持久化管理，建议手动注册为 git submodule：
 > `git submodule add <url> git-repo-skills/<name>`
